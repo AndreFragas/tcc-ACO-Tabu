@@ -1,5 +1,6 @@
 from typing import List
 from classes.ponto import Ponto
+from funcoes.otimizar_com_trocas import otimizar_com_trocas
 from funcoes.criar_tabela_de_probabilidades import criar_tabela_de_probabilidades
 from funcoes.calcular_probabilidades import calcular_probabilidades
 from funcoes.executar_aco_com_motoboys import executar_aco_com_motoboys
@@ -30,7 +31,7 @@ pontos: List[Ponto] = [
     Ponto("W", -26.2601708, -48.8144716),
     Ponto("X", -26.2835841, -48.8535669),
     Ponto("Y", -26.3284629, -48.7958883),
-    Ponto("Z", -48.8477327, -26.3360418),
+    Ponto("Z", -26.3360418, -48.8477327),
 ]
 quantidade_formigas = len(pontos)
 quantidade_motoboys = 5
@@ -39,13 +40,27 @@ beta = 1
 coeficiente_de_evaporacao = 0.01
 feromonio_inicial = 0.1
 constante_de_atualizacao_do_feromonio = 10
-iteracoes_aco = 5000
+iteracoes_aco = 1000
 iteracoes_tabu = 5
-tabela_de_probabilidades = criar_tabela_de_probabilidades(pontos, feromonio_inicial, coeficiente_de_evaporacao)
 
-calcular_probabilidades(pontos, tabela_de_probabilidades)
+melhor_resultado = otimizar_com_trocas(
+    pontos=pontos,
+    quantidade_motoboys=quantidade_motoboys,
+    num_iteracoes_aco=iteracoes_aco,
+    feromonio_inicial=feromonio_inicial,
+    coef_evaporacao=coeficiente_de_evaporacao,
+    max_tentativas_sem_melhora=100
+)
 
-resultados = executar_aco_com_motoboys(pontos, quantidade_motoboys, iteracoes_aco, feromonio_inicial, coeficiente_de_evaporacao)
+for i, (caminho, distancia) in enumerate(melhor_resultado):
+    print(f"Motoboy {i + 1}: {' -> '.join(caminho)} | Distância: {distancia}")
 
-for i, (caminho, distancia) in enumerate(resultados):
-    print(f"Resultado do motoboy {i + 1}: {' '.join(caminho)} com distância {distancia}")
+
+# tabela_de_probabilidades = criar_tabela_de_probabilidades(pontos, feromonio_inicial, coeficiente_de_evaporacao)
+
+# calcular_probabilidades(pontos, tabela_de_probabilidades)
+
+# resultados = executar_aco_com_motoboys(pontos, quantidade_motoboys, iteracoes_aco, feromonio_inicial, coeficiente_de_evaporacao)
+
+# for i, (caminho, distancia) in enumerate(resultados):
+#     print(f"Resultado do motoboy {i + 1}: {' '.join(caminho)} com distância {distancia}")
