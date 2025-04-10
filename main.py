@@ -1,9 +1,7 @@
+import time
 from typing import List
 from classes.ponto import Ponto
 from funcoes.otimizar_com_trocas import otimizar_com_trocas
-from funcoes.criar_tabela_de_probabilidades import criar_tabela_de_probabilidades
-from funcoes.calcular_probabilidades import calcular_probabilidades
-from funcoes.executar_aco_com_motoboys import executar_aco_com_motoboys
 
 pontos: List[Ponto] = [
     Ponto("A", -26.3807755, -48.8279418),
@@ -33,34 +31,29 @@ pontos: List[Ponto] = [
     Ponto("Y", -26.3284629, -48.7958883),
     Ponto("Z", -26.3360418, -48.8477327),
 ]
-quantidade_formigas = len(pontos)
 quantidade_motoboys = 5
-alfa = 1
-beta = 1
-coeficiente_de_evaporacao = 0.01
-feromonio_inicial = 0.1
-constante_de_atualizacao_do_feromonio = 10
 iteracoes_aco = 1000
-iteracoes_tabu = 5
+feromonio_inicial = 0.1
+coeficiente_de_evaporacao = 0.01
+max_tentativas_sem_melhora = 100
+const_att_feromonios = 10
+
+inicio = time.time()
 
 melhor_resultado = otimizar_com_trocas(
-    pontos=pontos,
-    quantidade_motoboys=quantidade_motoboys,
-    num_iteracoes_aco=iteracoes_aco,
-    feromonio_inicial=feromonio_inicial,
-    coef_evaporacao=coeficiente_de_evaporacao,
-    max_tentativas_sem_melhora=100
+    pontos,
+    quantidade_motoboys,
+    iteracoes_aco,
+    feromonio_inicial,
+    coeficiente_de_evaporacao,
+    max_tentativas_sem_melhora,
+    const_att_feromonios
 )
+
+fim = time.time()
+tempo_total = fim - inicio
 
 for i, (caminho, distancia) in enumerate(melhor_resultado):
     print(f"Motoboy {i + 1}: {' -> '.join(caminho)} | Distância: {distancia}")
 
-
-# tabela_de_probabilidades = criar_tabela_de_probabilidades(pontos, feromonio_inicial, coeficiente_de_evaporacao)
-
-# calcular_probabilidades(pontos, tabela_de_probabilidades)
-
-# resultados = executar_aco_com_motoboys(pontos, quantidade_motoboys, iteracoes_aco, feromonio_inicial, coeficiente_de_evaporacao)
-
-# for i, (caminho, distancia) in enumerate(resultados):
-#     print(f"Resultado do motoboy {i + 1}: {' '.join(caminho)} com distância {distancia}")
+print(f"\n⏱️ Tempo total de execução: {tempo_total:.2f} segundos")

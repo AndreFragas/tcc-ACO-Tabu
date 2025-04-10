@@ -13,7 +13,8 @@ def otimizar_com_trocas(
     num_iteracoes_aco: int,
     feromonio_inicial: float,
     coef_evaporacao: float,
-    max_tentativas_sem_melhora: int = 25
+    max_tentativas_sem_melhora: int = 25,
+    const_att_feromonios: float = 0,
 ):
     melhor_resultado = None
     menor_distancia_total = float('inf')
@@ -34,7 +35,7 @@ def otimizar_com_trocas(
         for pontos_motoboy in pontos_por_motoboy:
             tabela_probabilidades = criar_tabela_de_probabilidades(pontos_motoboy, feromonio_inicial, coef_evaporacao)
             calcular_probabilidades(pontos_motoboy, tabela_probabilidades)
-            resultado = executar_aco(pontos_motoboy, tabela_probabilidades, num_iteracoes_aco)
+            resultado = executar_aco(pontos_motoboy, tabela_probabilidades, num_iteracoes_aco, const_att_feromonios)
             resultados.append(resultado)
 
         soma_total = sum(dist for _, dist in resultados)

@@ -3,7 +3,7 @@ from classes.formiga import Formiga
 from classes.ponto import Ponto
 from classes.tabela_probabilidades import TabelaDeProbabilidades
 
-def executar_aco(pontos: List[Ponto], tabela_de_probabilidades: List[TabelaDeProbabilidades], num_iteracoes: int):
+def executar_aco(pontos: List[Ponto], tabela_de_probabilidades: List[TabelaDeProbabilidades], num_iteracoes: int, const_att_feromonios: float):
     melhor_solucao = None
     melhor_distancia = float('inf')
 
@@ -21,6 +21,6 @@ def executar_aco(pontos: List[Ponto], tabela_de_probabilidades: List[TabelaDePro
                 tabela.atualizarFeromonio(1 / formiga.distancia_total)  
         
         for tabela in tabela_de_probabilidades:
-            tabela.atualizarFeromonio(0)  
+            tabela.atualizarFeromonio(const_att_feromonios)  
 
     return melhor_solucao, melhor_distancia
