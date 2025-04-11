@@ -11,7 +11,7 @@ def executar_aco_com_motoboys(pontos: List[Ponto], quantidade_motoboys: int, num
     resultados_motoboys = []
     
     for i, pontos_motoboy in enumerate(pontos_por_motoboy):
-        print(f"Executando ACO para o motoboy {i + 1} com os pontos: {[p.nome for p in pontos_motoboy]}")
+        #print(f"Executando ACO para o motoboy {i + 1} com os pontos: {[p.nome for p in pontos_motoboy]}")
 
         tabela_de_probabilidades_motoboy = criar_tabela_de_probabilidades(pontos_motoboy, feromonio_inicial, coeficiente_de_evaporacao) 
 

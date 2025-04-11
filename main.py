@@ -31,29 +31,49 @@ pontos: List[Ponto] = [
     Ponto("Y", -26.3284629, -48.7958883),
     Ponto("Z", -26.3360418, -48.8477327),
 ]
-quantidade_motoboys = 5
-iteracoes_aco = 1000
-feromonio_inicial = 0.1
-coeficiente_de_evaporacao = 0.01
-max_tentativas_sem_melhora = 100
+quantidade_motoboys = 3
+coeficiente_de_evaporacao = 0.03
+feromonio_inicial = 1
 const_att_feromonios = 10
+iteracoes_aco = 1000
+max_tentativas_sem_melhora = 100
 
-inicio = time.time()
+resultados = []
 
-melhor_resultado = otimizar_com_trocas(
-    pontos,
-    quantidade_motoboys,
-    iteracoes_aco,
-    feromonio_inicial,
-    coeficiente_de_evaporacao,
-    max_tentativas_sem_melhora,
-    const_att_feromonios
-)
+for execucao in range(5): 
+    print(f"\n🧪 Execução {execucao + 1}")
+    inicio = time.time()
 
-fim = time.time()
-tempo_total = fim - inicio
+    melhor_resultado = otimizar_com_trocas(
+        pontos,
+        quantidade_motoboys,
+        iteracoes_aco,
+        feromonio_inicial,
+        coeficiente_de_evaporacao,
+        max_tentativas_sem_melhora,
+        const_att_feromonios
+    )
 
-for i, (caminho, distancia) in enumerate(melhor_resultado):
-    print(f"Motoboy {i + 1}: {' -> '.join(caminho)} | Distância: {distancia}")
+    fim = time.time()
+    tempo_total = fim - inicio
+    soma_distancias = 0
 
-print(f"\n⏱️ Tempo total de execução: {tempo_total:.2f} segundos")
+    for i, (caminho, distancia) in enumerate(melhor_resultado):
+        print(f"Motoboy {i + 1}: {' -> '.join(caminho)} | Distância: {distancia}")
+        soma_distancias += distancia
+
+    print(f"🔁 Soma das distâncias: {soma_distancias:.2f} km")
+    print(f"⏱️ Tempo da execução: {tempo_total:.2f} segundos")
+
+    resultados.append((soma_distancias, tempo_total))
+
+print("\n📊 Resumo Final das 5 Execuções:")
+for i, (soma, tempo) in enumerate(resultados):
+    print(f"Execução {i + 1}: Soma das distâncias = {soma:.2f} km | Tempo = {tempo:.2f} s")
+
+# (Opcional) Exibir média das somas e tempos
+media_soma = sum(r[0] for r in resultados) / len(resultados)
+media_tempo = sum(r[1] for r in resultados) / len(resultados)
+
+print(f"\n📈 Média das distâncias: {media_soma:.2f} km")
+print(f"⏳ Média do tempo: {media_tempo:.2f} segundos")

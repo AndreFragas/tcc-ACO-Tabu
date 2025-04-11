@@ -26,7 +26,7 @@ def otimizar_com_trocas(
     iteracao = 0
     while tentativas_sem_melhora < max_tentativas_sem_melhora:
         iteracao += 1
-        print(f"\nIteração de troca {iteracao}")
+        #print(f"\nIteração de troca {iteracao}")
 
         if iteracao > 1:
             pontos_por_motoboy = trocar_rotas(pontos_por_motoboy)
@@ -44,10 +44,10 @@ def otimizar_com_trocas(
             menor_distancia_total = soma_total
             melhor_resultado = resultados
             tentativas_sem_melhora = 0
-            print(f"✨ Novo melhor resultado com soma de distâncias: {menor_distancia_total}")
+            #print(f"✨ Novo melhor resultado com soma de distâncias: {menor_distancia_total}")
         else:
             tentativas_sem_melhora += 1
-            print(f"Nenhuma melhoria. Tentativas sem melhoria: {tentativas_sem_melhora}")
+            #print(f"Nenhuma melhoria. Tentativas sem melhoria: {tentativas_sem_melhora}")
 
-    print(f"\nFinalizado após {iteracao} iterações. Melhor soma de distâncias: {menor_distancia_total}")
+    #print(f"\nFinalizado após {iteracao} iterações. Melhor soma de distâncias: {menor_distancia_total}")
     return melhor_resultado
